@@ -14,7 +14,7 @@ import { WishListComponent } from './body/wish-list/wish-list.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'product-detail', component: ProductDetailComponent },
+  { path: 'product-detail/:slug', component: ProductDetailComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'my-account', component: MyaccountComponent },

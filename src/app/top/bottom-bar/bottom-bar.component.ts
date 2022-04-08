@@ -7,16 +7,16 @@ import { DataService } from '../../share/data.service';
   styleUrls: ['./bottom-bar.component.scss']
 })
 export class BottomBarComponent implements OnInit {
-  selectedMessage: any;
+  cart: any;
 
   constructor(private dataService:DataService) { }
 
   ngOnInit(): void {
 
     //Set value default for test
-    this.dataService.changeMessage("1");
+    // this.dataService.updateCart("1");
 
-    this.dataService.currentMessage.subscribe(message => (this.selectedMessage = message));
+    this.dataService.currentCart.subscribe(editCart => (this.cart = editCart));
   }
 
 }

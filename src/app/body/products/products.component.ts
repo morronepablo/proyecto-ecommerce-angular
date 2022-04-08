@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../share/data.service';
+import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -7,19 +9,48 @@ import { DataService } from '../../share/data.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  selectedMessage: any;
+  // [x: string]: any;
+  cart: any;
+  products;
 
-  constructor(private dataService:DataService) { }
+  constructor(
+    private dataService:DataService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
-    this.dataService.currentMessage.subscribe(message => (this.selectedMessage = message));
+    this.dataService.currentCart.subscribe(editCart => (this.cart = editCart));
+
+    this.getProduct();
+
   }
 
-  add2cart(item) {
+  async getProduct() {
+    try {
+      const response = await axios.get('assets/data/products.json');
+      console.log('response.data-', response.data);
+      console.log('response.status-', response.status);
+      this.products = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-    this.selectedMessage++;
+  add2cart(qty,product) {
+
+    //this.cart++;
+    this.cart.products.push(product);
+    this.cart.cart = this.cart.cart + qty;
+    //let tmpCart = {cart: this.cart.cart + item, products: []};
     //Set value in component 1
-    this.dataService.changeMessage(this.selectedMessage);
+    this.dataService.updateCart(this.cart);
+
+    console.log('this.cart---> ', this.cart);
+
+  }
+
+  bynow() {
+    this.router.navigate(["cart"]);
   }
 
 }
